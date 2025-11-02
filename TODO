@@ -1,0 +1,231 @@
+# Offline - Web App Specification
+
+## Core Concept
+A rebellious, anti-cloud note-taking web app that prioritizes privacy, accessibility, and aesthetic pleasure. Designed to work beautifully on older browsers while providing a premium writing experience without server dependencies.
+
+## Architecture & Technical Foundation
+
+### Storage & Persistence
+- **Primary Storage**: IndexedDB for structured note data and metadata
+- **Fallback Storage**: localStorage for older browser compatibility
+- **No Server Dependencies**: 100% client-side application
+- **Data Ownership**: All data remains on user's device
+- **Export-First Philosophy**: Multiple export formats to prevent vendor lock-in
+
+### Browser Compatibility
+- **Target**: IE11+ (graceful degradation)
+- **Progressive Enhancement**: Modern features for newer browsers
+- **Fallback Strategies**: CSS Grid → Flexbox → Float layouts
+- **JavaScript**: ES5 compatible with optional modern features
+
+## User Interface Design
+
+### Layout Structure
+```
+┌─────────────┬──────────────┬─────────────────────────────┐
+│   Tags/     │    Notes     │                             │
+│  Folders    │    List      │        Main Editor          │
+│   Pane      │    Pane      │         Pane               │
+│  (200px)    │  (300px)     │      (remaining)           │
+└─────────────┴──────────────┴─────────────────────────────┘
+```
+
+### Visual Design Principles
+- **Typography-First**: Exceptional reading experience with multiple font stacks
+- **Minimalist Aesthetic**: Clean, distraction-free interface
+- **Subtle Animations**: Micro-interactions that delight without overwhelming
+- **Emoji Icons**: Fast-loading, universally supported iconography
+- **Multiple Themes**: At least 5 distinct color schemes (Light, Dark, Gruvbox, Bronokai, Ocean)
+
+### Responsive Behavior
+- **Desktop**: Three-pane layout
+- **Tablet**: Collapsible sidebar, two-pane priority
+- **Mobile**: Single-pane with navigation drawer
+
+## Core Features
+
+### Note Management
+- **Rich Text Editing**: Markdown support with live preview
+- **Tagging System**: Hierarchical tags with auto-suggestion
+- **Folder Organization**: Nested folder structure
+- **Full-Text Search**: Client-side search across all notes
+- **Note Linking**: Internal note references with backlinks
+- **Version History**: Local versioning with diff visualization
+
+### Writing Experience
+- **Zen Mode**: Distraction-free full-screen writing
+- **Focus Mode**: Highlight current paragraph/sentence
+- **Word/Character Counting**: Real-time statistics
+- **Reading Time Estimates**: Slow/Average/Fast reader calculations
+- **Speaking Time**: Estimated presentation duration
+- **Writing Goals**: Daily/weekly word count targets
+
+### Productivity Features
+- **Writing Streak Heatmap**: GitHub-style contribution calendar
+- **Daily Metrics**: Notes created, words written, time spent
+- **Goal Tracking**: Customizable writing targets with progress indicators
+- **Session Timer**: Pomodoro-style focused writing sessions
+- **Distraction Blocking**: Optional minimal UI mode
+
+## Accessibility Features
+
+### Keyboard Navigation
+- **Full Keyboard Support**: Tab navigation through all interface elements
+- **Vim Keybindings**: Optional power-user shortcuts
+- **Custom Shortcuts**: User-configurable hotkeys
+- **Screen Reader Support**: Proper ARIA labels and semantic HTML
+
+### Visual Accessibility
+- **High Contrast Mode**: Enhanced visibility option
+- **Font Size Controls**: User-adjustable typography scales
+- **Color Blind Support**: Distinguishable UI elements without color dependency
+- **Reduced Motion**: Respect for prefers-reduced-motion
+
+### Cognitive Accessibility
+- **Simple Navigation**: Intuitive information architecture
+- **Undo/Redo**: Comprehensive action history
+- **Auto-Save**: Continuous background saving
+- **Clear Labels**: Descriptive UI text and icons
+
+## Export & Sharing
+
+### Export Formats
+- **Markdown**: Native format with metadata
+- **HTML**: Styled for web sharing
+- **Plain Text**: Universal compatibility
+- **PDF**: Print-ready documents
+- **JSON**: Complete data backup
+- **OPML**: Outline format for other apps
+
+### Sharing Features
+- **Web Share API**: Native mobile sharing when available
+- **Link Generation**: Temporary shareable links (client-side encryption)
+- **Print Optimization**: Beautiful print stylesheets
+- **Copy to Clipboard**: Quick sharing of formatted text
+
+## Data Management
+
+### Backup & Recovery
+- **Automatic Backups**: Regular local exports
+- **Manual Export**: On-demand full data export
+- **Import Functionality**: Restore from previous exports
+- **Migration Tools**: Import from popular note apps
+
+### Data Privacy
+- **No Tracking**: Zero analytics or telemetry
+- **Local Encryption**: Optional client-side encryption
+- **Data Portability**: Easy export to prevent lock-in
+- **Privacy-First Messaging**: Clear communication about data handling
+
+## Advanced Features (Phase 2)
+
+### Text Analysis
+- **Reading Level**: Flesch-Kincaid grade level analysis
+- **Semantic Analysis**: Keyword extraction and topic modeling
+- **Writing Style**: Tone and readability metrics
+- **Language Detection**: Multi-language support
+
+### Customization
+- **Custom Themes**: User-created color schemes
+- **Layout Options**: Adjustable pane sizes and positions
+- **Font Selection**: Multiple typeface options
+- **UI Density**: Compact/comfortable/spacious modes
+
+### Collaboration (Local Network)
+- **Peer-to-Peer Sharing**: WebRTC for direct device sharing
+- **Local Network Sync**: Share between devices on same network
+- **Collaborative Editing**: Real-time editing for shared sessions
+
+## Technical Implementation
+
+### Performance Optimizations
+- **Lazy Loading**: Load notes on demand
+- **Virtual Scrolling**: Handle large note collections
+- **Debounced Search**: Efficient search implementation
+- **Service Worker**: Offline functionality and caching
+- **Minimal Dependencies**: Vanilla JS preferred, essential libraries only
+
+### Browser Features
+- **Web Workers**: Background processing for heavy operations
+- **Intersection Observer**: Efficient scroll-based animations
+- **CSS Variables**: Dynamic theming support
+- **Flexbox/Grid**: Modern layout with fallbacks
+
+## User Onboarding
+
+### First-Time Experience
+- **Welcome Tour**: Interactive feature introduction
+- **Sample Notes**: Pre-populated examples
+- **Quick Setup**: Theme selection and preferences
+- **Data Warning**: Clear explanation of local storage
+
+### Help & Documentation
+- **Contextual Help**: In-app tooltips and guides
+- **Keyboard Shortcuts**: Discoverable hotkey reference
+- **FAQ Section**: Common questions and solutions
+- **Video Tutorials**: Optional walkthrough content
+
+## Marketing Positioning
+
+### Core Messages
+- **"Your Notes, Your Device"**: Privacy-focused messaging
+- **"Works Everywhere"**: Broad compatibility promise
+- **"No Internet Required"**: Offline-first functionality
+- **"Beautiful Typography"**: Design-conscious positioning
+
+### Target Audiences
+- **Privacy Advocates**: Users concerned about data collection
+- **Legacy Device Users**: People with older computers/browsers
+- **Minimalist Writers**: Users seeking distraction-free tools
+- **Accessibility-Conscious Users**: People requiring inclusive design
+
+## Success Metrics
+
+### User Engagement
+- **Daily Active Users**: Regular usage patterns
+- **Writing Streaks**: Consecutive days of activity
+- **Notes Created**: Content generation volume
+- **Session Duration**: Time spent writing
+
+### Feature Adoption
+- **Theme Usage**: Popularity of different visual themes
+- **Export Frequency**: Data portability usage
+- **Zen Mode Adoption**: Focus feature engagement
+- **Accessibility Feature Usage**: Inclusive design success
+
+## Risk Mitigation
+
+### Browser Limitations
+- **Storage Quotas**: Graceful handling of storage limits
+- **Feature Detection**: Progressive enhancement strategy
+- **Polyfill Strategy**: Selective modern feature support
+
+### User Education
+- **Data Loss Prevention**: Clear backup reminders
+- **Browser Compatibility**: System requirements communication
+- **Feature Limitations**: Transparent capability disclosure
+
+---
+
+## Development Phases
+
+### Phase 1: Core MVP (Months 1-3)
+- Three-pane layout
+- Basic note creation/editing
+- IndexedDB storage
+- Simple theming
+- Export functionality
+
+### Phase 2: Polish & Features (Months 4-6)
+- Advanced typography
+- Animation system
+- Full accessibility support
+- Multiple export formats
+- Writing analytics
+
+### Phase 3: Advanced Features (Months 7-9)
+- Text analysis
+- Collaboration features
+- Custom themes
+- Mobile optimization
+- Performance optimization

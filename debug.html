@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Offline Notes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Page - Offline Notes App</h1>
+    
+    <div class="test-section">
+        <h2>1. JavaScript Loading Test</h2>
+        <div id="js-test-result">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. DOM Elements Test</h2>
+        <div id="dom-test-result">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Class Instantiation Test</h2>
+        <div id="class-test-result">Testing...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Event Listener Test</h2>
+        <button id="test-folder-btn">Test + Folder Button</button>
+        <div id="event-test-result">Click the button above</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Console Errors</h2>
+        <div id="console-errors">Check browser console for errors</div>
+    </div>
+
+    <!-- Load the same scripts as main app -->
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        // Debug script to test functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const results = {
+                js: document.getElementById('js-test-result'),
+                dom: document.getElementById('dom-test-result'),
+                class: document.getElementById('class-test-result'),
+                event: document.getElementById('event-test-result')
+            };
+            
+            // Test 1: JavaScript classes loaded
+            try {
+                if (typeof StorageManager !== 'undefined' && 
+                    typeof UIManager !== 'undefined' && 
+                    typeof ThemeManager !== 'undefined' && 
+                    typeof NotesManager !== 'undefined') {
+                    results.js.innerHTML = '<span class="success">✅ All JavaScript classes loaded</span>';
+                } else {
+                    results.js.innerHTML = '<span class="error">❌ Missing classes</span>';
+                }
+            } catch (error) {
+                results.js.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+            
+            // Test 2: DOM elements exist
+            const elements = ['new-folder-btn', 'new-note-btn', 'notes-list'];
+            const missing = elements.filter(id => !document.getElementById(id));
+            if (missing.length === 0) {
+                results.dom.innerHTML = '<span class="success">✅ All required DOM elements found</span>';
+            } else {
+                results.dom.innerHTML = '<span class="error">❌ Missing elements: ' + missing.join(', ') + '</span>';
+            }
+            
+            // Test 3: Class instantiation
+            try {
+                const storage = new StorageManager();
+                const notes = new NotesManager(storage);
+                results.class.innerHTML = '<span class="success">✅ Classes can be instantiated</span>';
+            } catch (error) {
+                results.class.innerHTML = '<span class="error">❌ Instantiation error: ' + error.message + '</span>';
+            }
+            
+            // Test 4: Event listener test
+            document.getElementById('test-folder-btn').addEventListener('click', function() {
+                try {
+                    const folderName = prompt('Enter folder name:');
+                    if (folderName) {
+                        results.event.innerHTML = '<span class="success">✅ Event listener working, got: ' + folderName + '</span>';
+                    } else {
+                        results.event.innerHTML = '<span class="success">✅ Event listener working (cancelled)</span>';
+                    }
+                } catch (error) {
+                    results.event.innerHTML = '<span class="error">❌ Event error: ' + error.message + '</span>';
+                }
+            });
+        });
+        
+        // Capture console errors
+        window.addEventListener('error', function(e) {
+            const errorDiv = document.getElementById('console-errors');
+            errorDiv.innerHTML += '<div class="error">❌ ' + e.message + ' (Line: ' + e.lineno + ')</div>';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Offline - Privacy-focused note-taking app that works entirely in your browser">
+    <title>Offline - Your Notes, Your Device</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="js/app.js" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    
+    <!-- No external dependencies - completely offline -->
+</head>
+<body>
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-editor" class="skip-link">Skip to main content</a>
+    
+    <!-- Main application container -->
+    <div id="app" class="app-container" role="application" aria-label="Offline Note Taking Application">
+        
+        <!-- Left sidebar: Tags and folders -->
+        <aside id="sidebar" class="sidebar" role="complementary" aria-label="Navigation and organization">
+            <header class="sidebar-header">
+                <h1 class="app-title">📝 Offline</h1>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Change theme">
+                    🎨
+                </button>
+            </header>
+            
+            <nav class="sidebar-nav" role="navigation" aria-label="Note organization">
+                <section class="nav-section">
+                    <h2 class="nav-heading">📁 Folders</h2>
+                    <div class="folder-actions">
+                        <button id="new-folder-btn" class="btn btn-secondary btn-sm" aria-label="Create new folder" title="Create new folder">
+                            ➕ Folder
+                        </button>
+                    </div>
+                    <ul id="folders-list" class="nav-list" role="tree" aria-label="Folders">
+                        <li role="treeitem" aria-expanded="true">
+                            <button class="folder-item active" data-folder="all">
+                                📄 All Notes <span class="count">(0)</span>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+                
+                <section class="nav-section">
+                    <h2 class="nav-heading">🏷️ Tags</h2>
+                    <ul id="tags-list" class="nav-list" role="list" aria-label="Tags">
+                        <!-- Tags will be populated dynamically -->
+                    </ul>
+                </section>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="new-note-btn" class="btn btn-primary" aria-label="Create new note">
+                    ➕ New Note
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Middle panel: Notes list -->
+        <section id="notes-panel" class="notes-panel" role="region" aria-label="Notes list">
+            <header class="panel-header">
+                <div class="search-container">
+                    <label for="search-input" class="visually-hidden">Search notes</label>
+                    <input 
+                        type="search" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="🔍 Search notes..." 
+                        aria-describedby="search-help"
+                    >
+                    <div id="search-help" class="visually-hidden">
+                        Search through all your notes by title or content
+                    </div>
+                </div>
+                <div class="panel-actions">
+                    <button id="sort-toggle" class="btn btn-secondary" aria-label="Toggle sort order" title="Sort by date">
+                        📅
+                    </button>
+                </div>
+            </header>
+            
+            <div id="notes-list" class="notes-list" role="list" aria-label="Your notes">
+                <div class="empty-state" role="status" aria-live="polite">
+                    <p>📝 No notes yet. Create your first note to get started!</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Right panel: Main editor -->
+        <main id="main-editor" class="editor-panel" role="main" aria-label="Note editor">
+            <div id="editor-container" class="editor-container">
+                <div class="empty-editor" role="status" aria-live="polite">
+                    <h2>✨ Welcome to Offline</h2>
+                    <p>Your privacy-focused note-taking app that works entirely in your browser.</p>
+                    <ul>
+                        <li>🔒 <strong>Private:</strong> All data stays on your device</li>
+                        <li>🌐 <strong>Offline:</strong> No internet required</li>
+                        <li>♿ <strong>Accessible:</strong> Built for everyone</li>
+                        <li>📤 <strong>Portable:</strong> Export your data anytime</li>
+                    </ul>
+                    <p>Create a new note to begin writing!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Loading indicator -->
+    <div id="loading" class="loading-overlay" aria-hidden="true" role="status" aria-label="Loading">
+        <div class="loading-spinner"></div>
+        <p>Loading your notes...</p>
+    </div>
+    
+    <!-- Toast notifications -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true">
+        <!-- Toast messages will be inserted here -->
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <button class="mobile-nav-btn active" data-panel="sidebar" aria-label="Folders and Tags">
+            📁
+        </button>
+        <button class="mobile-nav-btn" data-panel="notes-panel" aria-label="Notes List">
+            📄
+        </button>
+        <button class="mobile-nav-btn" data-panel="main-editor" aria-label="Note Editor">
+            ✏️
+        </button>
+    </nav>
+    
+    
+    <!-- Quill Rich Text Editor -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    
+    <!-- Scripts - Load in correct dependency order -->
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Debug script for testing -->
+    <script src="browser-debug.js"></script>
+</body>
+</html>

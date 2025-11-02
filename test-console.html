@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Test - Offline Notes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .error { background: #ffe6e6; color: #d00; }
+        .success { background: #e6ffe6; color: #060; }
+        button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Console Test</h1>
+    <div id="output"></div>
+    
+    <button onclick="testFolderButton()">Test + Folder Button</button>
+    <button onclick="testQuillEditor()">Test Quill Editor</button>
+    <button onclick="testEventListeners()">Test Event Listeners</button>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'log') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = new Date().toLocaleTimeString() + ': ' + message;
+            output.appendChild(div);
+            console.log(message);
+        }
+        
+        function testFolderButton() {
+            log('Testing folder button...');
+            const btn = document.getElementById('new-folder-btn');
+            if (btn) {
+                log('✅ Folder button found', 'success');
+                btn.click();
+            } else {
+                log('❌ Folder button NOT found', 'error');
+            }
+        }
+        
+        function testQuillEditor() {
+            log('Testing Quill editor...');
+            if (typeof Quill !== 'undefined') {
+                log('✅ Quill library loaded', 'success');
+                try {
+                    const editor = new Quill('#test-editor', { theme: 'snow' });
+                    log('✅ Quill editor created successfully', 'success');
+                } catch (error) {
+                    log('❌ Quill editor creation failed: ' + error.message, 'error');
+                }
+            } else {
+                log('❌ Quill library NOT loaded', 'error');
+            }
+        }
+        
+        function testEventListeners() {
+            log('Testing event listeners...');
+            const elements = ['new-folder-btn', 'new-note-btn', 'search-input'];
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    log(`✅ Element ${id} found`, 'success');
+                } else {
+                    log(`❌ Element ${id} NOT found`, 'error');
+                }
+            });
+        }
+        
+        // Capture all console errors
+        window.addEventListener('error', function(e) {
+            log('❌ JavaScript Error: ' + e.message + ' (Line: ' + e.lineno + ')', 'error');
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            log('❌ Unhandled Promise Rejection: ' + e.reason, 'error');
+        });
+        
+        log('Console test page loaded');
+    </script>
+    
+    <!-- Load main app scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Quill.js for testing -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    
+    <div id="test-editor" style="height: 100px; margin: 20px 0;"></div>
+</body>
+</html>
